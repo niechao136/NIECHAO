@@ -1,0 +1,15 @@
+{
+  "name": "nechao",
+  "version": "1.0.0",
+  "description": "",
+  "main": ".eslintrc.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@paddlejs/paddlejs-backend-webgl": "^1.2.9",
+    "@paddlejs/paddlejs-core": "^2.2.0"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/text/text"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "NIECHAO",
+    "navigationBarBackgroundColor": "#ffffff"
+  },
+  "plugins": {
+    "paddlejs-plugin": {
+      "version": "2.0.1",
+      "provider": "wx7138a7bb793608c3"
+    }
+  },
+  "style": "v2",
+  "componentFramework": "glass-easel",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

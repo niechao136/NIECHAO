@@ -1,0 +1,14 @@
+/**index.wxss**/
+page {
+  margin-top: 80px;
+  text-align: center;
+}
+
+.navigator-hover {
+  color:blue;
+}
+
+navigator {
+  height: 40px;
+  line-height: 40px;
+}

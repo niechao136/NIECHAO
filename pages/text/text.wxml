@@ -1,0 +1,12 @@
+<!--pages/text.wxml-->
+<view class="page-body">
+  <view class="page-body-wrapper">
+    <view class="btn-area">
+      <button type="primary" bindtap="takePhoto">拍照</button>
+    </view>
+    <view class="btn-area">
+      <button type="primary" bindtap="localPhoto">本地</button>
+    </view>
+    <image wx:if="{{src}}" mode="widthFix" src="{{src}}"></image>
+  </view>
+</view>

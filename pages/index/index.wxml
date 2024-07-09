@@ -1,0 +1,4 @@
+<!--index.wxml-->
+<view class="btn-area page">
+  <navigator url="/pages/text/text" hover-class="navigator-hover">文字识别</navigator>
+</view>
