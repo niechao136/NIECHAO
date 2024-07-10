@@ -1,10 +1,4 @@
 // pages/text.js
-import * as paddlejs from '@paddlejs/paddlejs-core'
-import '@paddlejs/paddlejs-backend-webgl'
-
-const plugin = requirePlugin("paddlejs-plugin")
-plugin.register(paddlejs, wx)
-let pdjs
 
 Page({
 
@@ -39,9 +33,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    pdjs = new paddlejs.Runner({
-      
-    })
+    // const Ocr = require('@paddlejs-models/ocr')
+    // wx.showLoading({
+    //   title: 'Loading',
+    // })
+    // Ocr.init().then(() => {
+    //   wx.hideLoading()
+    // })
   },
 
   /**

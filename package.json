@@ -9,7 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@paddlejs-mediapipe/opencv": "^0.0.4",
     "@paddlejs/paddlejs-backend-webgl": "^1.2.9",
-    "@paddlejs/paddlejs-core": "^2.2.0"
+    "@paddlejs/paddlejs-core": "^2.2.0",
+    "js-clipper": "^1.0.1"
   }
 }
