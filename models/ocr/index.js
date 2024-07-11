@@ -1,18 +1,19 @@
-import PaddleJs from '@paddlejs/paddlejs-core';
-import '@paddlejs/paddlejs-backend-webgl';
-const cv = require('./opencv_ocr')
+const PaddleJs = require('@paddlejs/paddlejs-core');
+require('@paddlejs/paddlejs-backend-webgl');
+const cv = require('../../opencv/opencv')
 const { DBPostprocess, clip, int, flatten } = require('./DBPostprocess')
 const { recPostprocess } = require('./recPostprocess')
 
 const plugin = requirePlugin("paddlejs-plugin");
+console.log(PaddleJs)
 plugin.register(PaddleJs, wx);
 
 let DETSHAPE = 960;
 let RECWIDTH = 320;
 const RECHEIGHT = 32;
 
-const canvas_det = wx.createOffscreenCanvas()
-const canvas_rec = wx.createOffscreenCanvas()
+const canvas_det = wx.createOffscreenCanvas({ type: '2d' })
+const canvas_rec = wx.createOffscreenCanvas({ type: '2d' })
 
 let detectRunner = null
 let recRunner = null
@@ -22,7 +23,7 @@ async function init(detCustomModel = null, recCustomModel = null) {
   const recModelPath = 'https://paddlejs.bj.bcebos.com/models/fuse/ocr/ch_PP-OCRv2_rec_fuse_activation/model.json';
   PaddleJs.env.set('webgl_pack_output', true);
 
-  detectRunner = new Runner({
+  detectRunner = new PaddleJs.Runner({
     modelPath: detCustomModel ? detCustomModel : detModelPath,
     fill: '#fff',
     mean: [0.485, 0.456, 0.406],
@@ -32,7 +33,7 @@ async function init(detCustomModel = null, recCustomModel = null) {
   });
   const detectInit = detectRunner.init();
 
-  recRunner = new Runner({
+  recRunner = new PaddleJs.Runner({
     modelPath: recCustomModel ? recCustomModel : recModelPath,
     fill: '#000',
     mean: [0.5, 0.5, 0.5],

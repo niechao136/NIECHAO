@@ -1,4 +1,4 @@
-const character = require('./ppocr_keys_v1.txt')
+let character
 
 class recPostprocess {
   ocr_character;
@@ -6,19 +6,26 @@ class recPostprocess {
   preds_prob;
 
   constructor(preds) {
-    this.ocr_character = character.toString().split('\n');
-    const preds_idx = [];
-    const preds_prob = [];
-    const pred_len = 6625;
-    for (let i = 0; i < preds.length; i += pred_len) {
-      const tmpArr = preds.slice(i, i + pred_len - 1);
-      const tmpMax = Math.max(...tmpArr);
-      const tmpIdx = tmpArr.indexOf(tmpMax);
-      preds_prob.push(tmpMax);
-      preds_idx.push(tmpIdx);
-    }
-    this.preds_idx = preds_idx;
-    this.preds_prob = preds_prob;
+    wx.getFileSystemManager().readFile({
+      filePath: '/models/ocr/ppocr_keys_v1.txt',
+      encoding: 'utf-8',
+      success(res) {
+        character = res.data
+        this.ocr_character = character.toString().split('\n');
+        const preds_idx = [];
+        const preds_prob = [];
+        const pred_len = 6625;
+        for (let i = 0; i < preds.length; i += pred_len) {
+          const tmpArr = preds.slice(i, i + pred_len - 1);
+          const tmpMax = Math.max(...tmpArr);
+          const tmpIdx = tmpArr.indexOf(tmpMax);
+          preds_prob.push(tmpMax);
+          preds_idx.push(tmpIdx);
+        }
+        this.preds_idx = preds_idx;
+        this.preds_prob = preds_prob;
+      }
+    })
   }
 
   decode(text_index, text_prob, is_remove_duplicate = false) {

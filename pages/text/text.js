@@ -1,4 +1,7 @@
 // pages/text.js
+const ocr = require('../../models/ocr/index')
+const query = wx.createSelectorQuery()
+let canvas, image
 
 Page({
 
@@ -24,6 +27,16 @@ Page({
           this.setData({
             src: res.tempFiles[0].tempFilePath
           })
+          setTimeout(async () => {
+            console.log(image, canvas)
+            const res = await ocr.recognize(image, { canvas });
+            console.log(res, image, canvas)
+            if (res.text?.length > 0) {
+              this.setData({
+                text: res.text
+              })
+            }
+          }, 1000)
         }
       }
     })
@@ -33,11 +46,24 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    // const Ocr = require('@paddlejs-models/ocr')
-    // wx.showLoading({
-    //   title: 'Loading',
-    // })
-    // Ocr.init().then(() => {
+    wx.showLoading({
+      title: 'Loading',
+    })
+    
+    // canvas = this.$('#canvas')
+    // image = this.$('#image')
+    query.select('#canvas').node()
+    query.select('#image').node()
+    query.select('#canvas').context()
+    query.select('#image').context()
+    query.select('#canvas').boundingClientRect()
+    query.select('#image').boundingClientRect()
+    query.exec(res => {
+      console.log(query.select('#canvas'), res)
+    })
+
+    console.log(this)
+    // ocr.init().then(() => {
     //   wx.hideLoading()
     // })
   },

@@ -1,7 +1,7 @@
 
 let _boundaryCheckingState = false;
 
-const CV = require('./opencv_ocr')
+const CV = require('../../opencv/opencv')
 const clipper = require('js-clipper')
 
 /**

@@ -7,6 +7,10 @@
     <view class="btn-area">
       <button type="primary" bindtap="localPhoto">本地</button>
     </view>
-    <image wx:if="{{src}}" mode="widthFix" src="{{src}}"></image>
+    <image id="image" mode="widthFix" src="{{src}}"></image>
+    <canvas id="canvas"></canvas>
+    <view wx:if="{{text}}">
+      <text wx:for="{{text}}">{{item}}</text>
+    </view>
   </view>
 </view>
