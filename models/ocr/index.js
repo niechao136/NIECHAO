@@ -69,39 +69,43 @@ async function detect(image) {
   let x = 0;
   let y = 0;
   // target的长宽比大些 就把原图的高变成target那么高
-  if (targetWidth / targetHeight * image.naturalHeight / image.naturalWidth >= 1) {
-      sw = Math.round(sh * image.naturalWidth / image.naturalHeight);
+  if (targetWidth / targetHeight * image.height / image.width >= 1) {
+      sw = Math.round(sh * image.width / image.height);
       x = Math.floor((targetWidth - sw) / 2);
   }
   // target的长宽比小些 就把原图的宽变成target那么宽
   else {
-      sh = Math.round(sw * image.naturalHeight / image.naturalWidth);
+      sh = Math.round(sw * image.height / image.width);
       y = Math.floor((targetHeight - sh) / 2);
   }
   ctx.drawImage(image, x, y, sw, sh);
   const shapeList = [DETSHAPE, DETSHAPE];
   const outsDict = await detectRunner.predict(canvas_det);
+  console.log(outsDict, shapeList)
   const postResult = new DBPostprocess(outsDict, shapeList);
+  console.log(postResult)
   // 获取坐标
   const result = postResult.outputBox();
+  console.log(result)
   // 转换原图坐标
   const points = JSON.parse(JSON.stringify(result.boxes));
+  console.log(outsDict, postResult, result, points)
   // 框选调整大小
   const adjust = 8;
   points && points.forEach(item => {
       item.forEach((point, index) => {
           // 扩大框选区域，便于文字识别
           point[0] = clip(
-              (Math.round(point[0] - x) * Math.max(image.naturalWidth, image.naturalHeight) / DETSHAPE)
+              (Math.round(point[0] - x) * Math.max(image.width, image.height) / DETSHAPE)
               + (index === 0 ? -adjust : index === 1 ? adjust : index === 2 ? adjust : -adjust),
               0,
-              image.naturalWidth
+              image.width
           );
           point[1] = clip(
-              (Math.round(point[1] - y) * Math.max(image.naturalWidth, image.naturalHeight) / DETSHAPE)
+              (Math.round(point[1] - y) * Math.max(image.width, image.height) / DETSHAPE)
               + (index === 0 ? -adjust : index === 1 ? -adjust : index === 2 ? adjust : adjust),
               0,
-              image.naturalHeight
+              image.height
           );
       });
   });
@@ -140,7 +144,7 @@ async function recognize(image, options) {
   const point = await detect(image);
   // 绘制文本框
   if (options?.canvas) {
-      drawBox(point, image, options.canvas, options.style);
+      // drawBox(point, image, options.canvas, options.style);
   }
   const boxes = sorted_boxes(point);
   const text_list = [];

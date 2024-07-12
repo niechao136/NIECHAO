@@ -4,6 +4,8 @@ let _boundaryCheckingState = false;
 const CV = require('../../opencv/opencv')
 const clipper = require('js-clipper')
 
+const Polygon = require('d3-polygon');
+
 /**
  * 把错误的数据转正
  * strip(0.09999999999999998)=0.1
@@ -207,6 +209,7 @@ class DBPostprocess {
 
     // 获取矩形的四个顶点坐标
     CV.boxPoints(bounding_box, mat);
+    console.log(bounding_box, mat)
 
     for (let i = 0; i < mat.data32F.length; i += 2) {
       const arr = [];
